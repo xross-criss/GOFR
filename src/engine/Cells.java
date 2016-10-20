@@ -2,13 +2,10 @@ package engine;
 
 import main.CellsPosition;
 
-import javax.lang.model.type.ArrayType;
-import javax.swing.plaf.nimbus.State;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 public class Cells {
-    public static State[][] createCells(int a, int b, CellsPosition cellsPosition, State[][] world) {
+    public static CellState[][] createCells(int a, int b, CellsPosition cellsPosition, CellState[][] world) {
 
         if (cellsPosition == CellsPosition.RANDOM) {
             world = createRandomCells(world, a, b);
@@ -26,31 +23,22 @@ public class Cells {
         return world;
     }
 
-    private static State[][] createLWSSCells(State[][] world, int a, int b) {
+    private static CellState[][] createLWSSCells(CellState[][] world, int a, int b) {
         return world;
     }
 
-    private static State[][] createImmortalCells(State[][] world, int a, int b) {
+    private static CellState[][] createImmortalCells(CellState[][] world, int a, int b) {
         return world;
     }
 
-    private static State[][] createGliderCells(State[][] world, int a, int b) {
+    private static CellState[][] createGliderCells(CellState[][] world, int a, int b) {
         return world;
     }
 
-    private static State[][] createRandomCells(State[][] world, int a, int b) {
+    private static CellState[][] createRandomCells(CellState[][] world, int a, int b) {
         int liczbaZywychKomorek = (int) (Math.random() * (((a * b) * (80 / 100)) + 1));
 
         Point point = new Point(0, 0);
-/*        int[][] place_list = new int[liczbaZywychKomorek][1];
-
-        for (int i = 0; i < liczbaZywychKomorek; i++) {
-            int randomNumberA = (int) (Math.random() * a);
-            int randomNumberB = (int) (Math.random() * b);
-
-            for (int j = 0; j< liczbaZywychKomorek)
-            checknumber: if()
-        }*/
 
         int randomX = random(a);
         int randomY = random(b);
