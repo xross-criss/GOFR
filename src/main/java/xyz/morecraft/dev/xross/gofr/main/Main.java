@@ -14,20 +14,30 @@ public class Main {
         // false
         System.out.println(dupaKowalskiego.equals(dupaKowalskiej));
 
-//
-//        World w = World.createRandomWorld(5, 10);
-//
-//        System.out.println(w.toString());
-//
-//        w.setAlive(0, 3);
-//        w.setAlive(1, 2);
-//
-//        System.out.println(w.toString());
-
     }
 
     private static class Dupa {
         private int rozmiarDupy;
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || !(o instanceof Dupa)) {
+                return false;
+            }
+
+            Dupa dupa = (Dupa) o;
+
+            return rozmiarDupy == dupa.rozmiarDupy;
+
+        }
+
+        @Override
+        public int hashCode() {
+            return rozmiarDupy;
+        }
     }
 
 }
