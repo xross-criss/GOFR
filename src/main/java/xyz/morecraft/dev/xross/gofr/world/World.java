@@ -19,6 +19,10 @@ public class World {
         }
     }
 
+    public CellState getCell(int x, int y) {
+        return world[x][y];
+    }
+
     public void setAlive(int x, int y) {
         world[x][y] = ALIVE;
     }
@@ -28,9 +32,14 @@ public class World {
 
         int aliveCount = (int) (Math.random() * x * y * 0.8 + 1);
 
-        System.out.println(aliveCount);
-
-        /// TODO Set random cells alive
+        for (int i = 0; i < aliveCount; i++) {
+            int a, b;
+            do {
+                a = (int) (Math.random() * (x - 1));
+                b = (int) (Math.random() * (y - 1));
+            } while (world.getCell(a, b) == ALIVE);
+            world.setAlive(a, b);
+        }
 
         return world;
     }
