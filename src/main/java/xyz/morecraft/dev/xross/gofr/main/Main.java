@@ -10,11 +10,6 @@ public class Main {
 
         System.out.println(w.toString());
 
-        w.setAlive(0, 3);
-        w.setAlive(1, 2);
-
-        System.out.println(w.toString());
-
     }
 
 }
