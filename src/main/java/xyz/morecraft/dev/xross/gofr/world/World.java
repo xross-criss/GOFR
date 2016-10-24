@@ -8,15 +8,28 @@ import static xyz.morecraft.dev.xross.gofr.engine.CellState.DEAD;
 public class World {
 
     private CellState[][] world;
+    private int height;
+    private int width;
 
     public World(int x, int y) {
         world = new CellState[x][y];
+
+        height = y;
+        width = x;
 
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < y; j++) {
                 world[i][j] = DEAD;
             }
         }
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWidth() {
+        return width;
     }
 
     public CellState getCell(int x, int y) {
