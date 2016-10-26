@@ -31,10 +31,10 @@ public class Processor {
             iteration = 10;
         } else if (steps >= 1000 && steps < 10000) {
             iteration = 100;
-        } else if (steps >= 10000 && steps < 100000) {
-            iteration = 1000;
-        } else if (steps >= 100000) {
-            iteration = 10000;
+        } else if (steps >= 10000 && steps < 1000000) {
+            iteration = steps % 100;
+        } else if (steps >= 1000000) {
+            iteration = steps % 1000;
         }
         for (int i = 1; i < steps; i += iteration) {
             for (int j = 1; j < steps; j++) {
