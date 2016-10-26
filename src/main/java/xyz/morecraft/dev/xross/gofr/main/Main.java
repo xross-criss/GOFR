@@ -7,12 +7,14 @@ public class Main {
 
     public static void main(String[] args) {
 
-        boolean showIt = true;
-        int steps = 10;
-        boolean isTorus = false;
+        boolean showIt = true; //pokazuje krok po kroku
+        int steps = 1000; //ilość kroków
+        boolean isTorus = false; //czy świat ma być torusem
 
-        int height = 5;
-        int width = 10;
+        int height = 5; // ilość wierszy (pionowo)
+        int width = 10; // ilość kolumn (poziomo)
+
+
 
         World w = World.createRandomWorld(height, width);
 //        System.out.println(w.toString());

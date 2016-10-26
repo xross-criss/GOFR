@@ -40,11 +40,18 @@ public class World {
         world[x][y] = ALIVE;
     }
 
+    public void setDead(int x, int y) {
+        world[x][y] = DEAD;
+    }
+
     public static World createRandomWorld(int x, int y) {
         World world = new World(x, y);
 
-        int aliveCount = (int) (Math.random() * x * y * 0.8 + 1);
+//        int aliveCount = (int) (Math.random() * x * y * 0.8 + 1);
 
+        int aliveCount = 3;
+
+        //TODO
         for (int i = 0; i < aliveCount; i++) {
             int a, b;
             do {
