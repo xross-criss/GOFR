@@ -75,4 +75,12 @@ public class World {
         }
         return s;
     }
+
+    public boolean isLiveAt(int y, int x) {
+        if(getCell(y, x) == CellState.ALIVE){
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

@@ -30,5 +30,4 @@ public class Main {
         w = Processor.processWorld(w, steps, showIt, height, width, isTorus, saveFile, filename);
 
     }
-
 }

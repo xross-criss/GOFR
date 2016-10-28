@@ -7,6 +7,12 @@ import java.io.IOException;
 
 public class Processor {
 
+    private static final int[][] NEIGHBOURS = {
+            {-1, -1}, {-1, 0}, {-1, +1},
+            {0, -1}, /* us */ {0, +1},
+            {+1, -1}, {+1, 0}, {+1, +1}
+    };
+
     public static World processWorld(World w, int steps, boolean showIt, int height, int width, boolean isTorus, boolean saveFile, String filename) throws IOException {
         int[][] cellNeighbourhood = new int[height][width];
 
@@ -115,159 +121,16 @@ public class Processor {
     }
 
     private static int[][] coutIfNotTorus(World w, int[][] cellNeighbourhood, int height, int width) {
-        int neighbours = 0; //TODO - poprawić nieefektywne liczenie komórek
+        int neighbours = 0;
 
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                if (i == 0 && j == 0) { // lewy górny róg
-                    if (w.getCell(i, j + 1) == CellState.ALIVE) {
-                        neighbours++;
-                    }
-                    if (w.getCell(i + 1, j) == CellState.ALIVE) {
-                        neighbours++;
-                    }
-                    if (w.getCell(i + 1, j + 1) == CellState.ALIVE) {
+                for (int[] offset : NEIGHBOURS) {
+                    if (w.isLiveAt(i + offset[1], j + offset[0])) {
                         neighbours++;
                     }
                 }
-
-                if (i == height - 1 && j == width - 1) { //prawy górny róg
-                    if (w.getCell(i, j - 1) == CellState.ALIVE) {
-                        neighbours++;
-                    }
-                    if (w.getCell(i - 1, j) == CellState.ALIVE) {
-                        neighbours++;
-                    }
-                    if (w.getCell(i - 1, j - 1) == CellState.ALIVE) {
-                        neighbours++;
-                    }
-                }
-
-                if (i == 0 && j == width - 1) {//prawy dolny róg
-                    if (w.getCell(i, j - 1) == CellState.ALIVE) {
-                        neighbours++;
-                    }
-                    if (w.getCell(i + 1, j) == CellState.ALIVE) {
-                        neighbours++;
-                    }
-                    if (w.getCell(i + 1, j - 1) == CellState.ALIVE) {
-                        neighbours++;
-                    }
-                }
-
-                if (i == height - 1 && j == 0) { // lewy dolny róg
-                    if (w.getCell(i - 1, j) == CellState.ALIVE) {
-                        neighbours++;
-                    }
-                    if (w.getCell(i - 1, j + 1) == CellState.ALIVE) {
-                        neighbours++;
-                    }
-                    if (w.getCell(i, j + 1) == CellState.ALIVE) {
-                        neighbours++;
-                    }
-                }
-
-                if (i == 0 && j > 0 && j < width - 1) {
-                    if (w.getCell(i, j - 1) == CellState.ALIVE) {
-                        neighbours++;
-                    }
-                    if (w.getCell(i + 1, j - 1) == CellState.ALIVE) {
-                        neighbours++;
-                    }
-                    if (w.getCell(i + 1, j) == CellState.ALIVE) {
-                        neighbours++;
-                    }
-                    if (w.getCell(i + 1, j + 1) == CellState.ALIVE) {
-                        neighbours++;
-                    }
-                    if (w.getCell(i, j + 1) == CellState.ALIVE) {
-                        neighbours++;
-                    }
-                }
-
-                if (j == 0 && i > 0 && i < height - 1) {
-                    if (w.getCell(i - 1, j) == CellState.ALIVE) {
-                        neighbours++;
-                    }
-                    if (w.getCell(i - 1, j + 1) == CellState.ALIVE) {
-                        neighbours++;
-                    }
-                    if (w.getCell(i, j + 1) == CellState.ALIVE) {
-                        neighbours++;
-                    }
-                    if (w.getCell(i + 1, j + 1) == CellState.ALIVE) {
-                        neighbours++;
-                    }
-                    if (w.getCell(i + 1, j) == CellState.ALIVE) {
-                        neighbours++;
-                    }
-                }
-
-                if (i == height - 1 && j > 0 && j < width - 1) {
-                    if (w.getCell(i, j - 1) == CellState.ALIVE) {
-                        neighbours++;
-                    }
-                    if (w.getCell(i - 1, j - 1) == CellState.ALIVE) {
-                        neighbours++;
-                    }
-                    if (w.getCell(i - 1, j) == CellState.ALIVE) {
-                        neighbours++;
-                    }
-                    if (w.getCell(i - 1, j + 1) == CellState.ALIVE) {
-                        neighbours++;
-                    }
-                    if (w.getCell(i, j + 1) == CellState.ALIVE) {
-                        neighbours++;
-                    }
-                }
-
-                if (j == width - 1 && i > 0 && i < height - 1) {
-                    if (w.getCell(i - 1, j) == CellState.ALIVE) {
-                        neighbours++;
-                    }
-                    if (w.getCell(i - 1, j - 1) == CellState.ALIVE) {
-                        neighbours++;
-                    }
-                    if (w.getCell(i, j - 1) == CellState.ALIVE) {
-                        neighbours++;
-                    }
-                    if (w.getCell(i + 1, j - 1) == CellState.ALIVE) {
-                        neighbours++;
-                    }
-                    if (w.getCell(i + 1, j) == CellState.ALIVE) {
-                        neighbours++;
-                    }
-                }
-
-                if (i > 0 && i < height - 1 && j > 0 && j < width - 1) {
-                    if (w.getCell(i - 1, j - 1) == CellState.ALIVE) {
-                        neighbours++;
-                    }
-                    if (w.getCell(i - 1, j) == CellState.ALIVE) {
-                        neighbours++;
-                    }
-                    if (w.getCell(i - 1, j + 1) == CellState.ALIVE) {
-                        neighbours++;
-                    }
-                    if (w.getCell(i, j + 1) == CellState.ALIVE) {
-                        neighbours++;
-                    }
-                    if (w.getCell(i + 1, j + 1) == CellState.ALIVE) {
-                        neighbours++;
-                    }
-                    if (w.getCell(i + 1, j) == CellState.ALIVE) {
-                        neighbours++;
-                    }
-                    if (w.getCell(i + 1, j - 1) == CellState.ALIVE) {
-                        neighbours++;
-                    }
-                    if (w.getCell(i, j - 1) == CellState.ALIVE) {
-                        neighbours++;
-                    }
-                }
-
                 cellNeighbourhood[i][j] = neighbours;
-
             }
         }
         return cellNeighbourhood;
