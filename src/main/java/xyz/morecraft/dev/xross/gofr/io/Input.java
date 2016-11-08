@@ -26,7 +26,7 @@ public class Input {
             BufferedWriter bw = new BufferedWriter(fw);
 
 //        bw.write( w.getWidth() + " " + w.getHeight() );
-            bw.write("============== " + step + " ==============");
+            bw.write("#" + step);
             bw.newLine();
 
             for (int i = 0; i < w.getHeight(); i++) {

@@ -12,8 +12,8 @@ public class Main {
 
         boolean showIt = true; //pokazuje krok po kroku
         boolean isTorus = false; //czy świat ma być torusem
-        boolean saveFile = false;
-        boolean readFile = false;
+        boolean saveFile = true; //czy zapisać świat
+        boolean readFile = false; //czy czytać świat z pliku?
         String filename = "first.txt";
 
         int steps = 3; //ilość kroków
@@ -24,6 +24,8 @@ public class Main {
 
         if (readFile) {
             w = Output.readFileFromTXT(filename);
+            height = w.getHeight();
+            width = w.getWidth();
         } else {
             w = World.createRandomWorld(height, width);
         }

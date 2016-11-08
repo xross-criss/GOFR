@@ -7,7 +7,7 @@ import static xyz.morecraft.dev.xross.gofr.engine.CellState.DEAD;
 
 public class World {
 
-    private CellState[][] world;
+    private static CellState[][] world;
     private int height;
     private int width;
 
@@ -36,12 +36,14 @@ public class World {
         return world[x][y];
     }
 
-    public void setAlive(int x, int y) {
+    public static World setAlive(int x, int y) {
         world[x][y] = ALIVE;
+        return null;
     }
 
-    public void setDead(int x, int y) {
+    public static World setDead(int x, int y) {
         world[x][y] = DEAD;
+        return null;
     }
 
     public static World createRandomWorld(int x, int y) {
@@ -83,4 +85,11 @@ public class World {
             return false;
         }
     }
+
+    public static World initializeWorld(int width, int heigth) {
+        World world = new World(heigth, width);
+        return world;
+    }
+
+
 }
