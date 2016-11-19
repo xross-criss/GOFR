@@ -8,6 +8,7 @@ import java.io.IOException;
 
 public class Main {
 
+
     public static void main(String[] args) throws IOException {
 
         boolean showIt = true; //pokazuje krok po kroku
