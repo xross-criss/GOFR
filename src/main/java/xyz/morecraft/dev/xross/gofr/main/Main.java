@@ -11,6 +11,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
+
         World w = new World(5, 5, WorldType.TORUS);
 
         w.setAlive(0, 1);
