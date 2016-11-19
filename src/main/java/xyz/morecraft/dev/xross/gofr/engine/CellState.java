@@ -15,4 +15,12 @@ public enum CellState {
         return "" + sign;
     }
 
+    public static CellState of(char c) {
+        if (c == ALIVE.sign) {
+            return ALIVE;
+        } else {
+            return DEAD;
+        }
+    }
+
 }
