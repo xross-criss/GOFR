@@ -1,24 +1,32 @@
 package xyz.morecraft.dev.xross.gofr.world;
 
 import xyz.morecraft.dev.xross.gofr.engine.CellState;
+import xyz.morecraft.dev.xross.gofr.engine.WorldType;
 
 import static xyz.morecraft.dev.xross.gofr.engine.CellState.ALIVE;
 import static xyz.morecraft.dev.xross.gofr.engine.CellState.DEAD;
 
 public class World {
 
-    private static CellState[][] world;
+    private CellState[][] world;
+    private CellState[][] worldCopy;
     private int height;
     private int width;
+    private WorldType worldType;
 
-    public World(int x, int y) {
-        world = new CellState[x][y];
+    public World(int width, int height) {
+        this(width, height, WorldType.SQUARE);
+    }
 
-        height = y;
-        width = x;
+    public World(int width, int height, WorldType worldType) {
 
-        for (int i = 0; i < x; i++) {
-            for (int j = 0; j < y; j++) {
+        this.width = width;
+        this.height = height;
+        this.worldType = worldType;
+
+        this.world = new CellState[width][height];
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
                 world[i][j] = DEAD;
             }
         }
@@ -36,29 +44,50 @@ public class World {
         return world[x][y];
     }
 
-    public static World setAlive(int x, int y) {
-        world[x][y] = ALIVE;
-        return null;
+    public CellState getCellSafe(int x, int y) {
+        if (worldType == WorldType.TORUS) {
+            return world[(x + width) % width][(y + height) % height];
+        } else if (worldType == WorldType.SQUARE) {
+            if (x < 0 || y < 0 || x >= width || y >= height) {
+                return DEAD;
+            } else {
+                return getCell(x, y);
+            }
+        } else {
+            return null;
+        }
     }
 
-    public static World setDead(int x, int y) {
-        world[x][y] = DEAD;
-        return null;
+    public World setCell(int x, int y, CellState state) {
+        world[x][y] = state;
+        return this;
     }
 
-    public static World createRandomWorld(int x, int y) {
-        World world = new World(x, y);
+    public World setAlive(int x, int y) {
+        return setCell(x, y, ALIVE);
+    }
 
-//        int aliveCount = (int) (Math.random() * x * y * 0.8 + 1);
+    public World setDead(int x, int y) {
+        return setCell(x, y, DEAD);
+    }
 
-        int aliveCount = 3;
+    public WorldType getWorldType() {
+        return worldType;
+    }
 
-        //TODO
+    public void setWorldType(WorldType worldType) {
+        this.worldType = worldType;
+    }
+
+    public static World createRandomWorld(int width, int height, WorldType worldType) {
+        World world = new World(width, height, worldType);
+        int aliveCount = (int) (Math.random() * width * height * 0.8 + 1);
+
         for (int i = 0; i < aliveCount; i++) {
             int a, b;
             do {
-                a = (int) (Math.random() * (x - 1));
-                b = (int) (Math.random() * (y - 1));
+                a = (int) (Math.random() * (width - 1));
+                b = (int) (Math.random() * (height - 1));
             } while (world.getCell(a, b) == ALIVE);
             world.setAlive(a, b);
         }
@@ -69,27 +98,28 @@ public class World {
     @Override
     public String toString() {
         String s = "";
-        for (int i = 0; i < world.length; i++) {
-            for (int j = 0; j < world[0].length; j++) {
-                s += world[i][j];
-            }
+        for (CellState[] row : world) {
+            for (CellState cs : row)
+                s += cs;
             s += "\n";
         }
-        return s;
+        return s.length() > 0 ? s.substring(0, s.length() - 1) : s;
     }
 
-    public boolean isLiveAt(int y, int x) {
-        if(getCell(y, x) == CellState.ALIVE){
-            return true;
-        } else {
-            return false;
-        }
+    public boolean isAliveAt(int x, int y) {
+        return getCell(x, y) == CellState.ALIVE;
     }
 
-    public static World initializeWorld(int width, int heigth) {
-        World world = new World(heigth, width);
-        return world;
+    public void prepareEmptyCopy() {
+        worldCopy = new CellState[width][height];
     }
 
+    public void setInCopy(int x, int y, CellState state) {
+        worldCopy[x][y] = state;
+    }
+
+    public void swapCopy() {
+        world = worldCopy;
+    }
 
 }
